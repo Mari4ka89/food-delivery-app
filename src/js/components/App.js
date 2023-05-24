@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div className="App">
       <div className="container-fluid">
-        <ul className="nav nav-underline">
+        <ul className="nav nav-underline py-2">
           <li className="nav-item">
             <NavLink to="/" className={calculateNavLinkClass}>
               Shop
@@ -18,7 +18,6 @@ export default function App() {
             </NavLink>
           </li>
         </ul>
-
         <Outlet />
       </div>
     </div>
