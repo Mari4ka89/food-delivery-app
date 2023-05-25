@@ -1,8 +1,31 @@
 import { useLoaderData } from "react-router-dom";
+import ContactForm from "./ContactForm";
+import SelectedItems from "./SelectedItems";
 
 export default function ShoppingCart() {
   const menuItems = useLoaderData();
   console.log("menuItems", menuItems);
 
-  return <div>Shopping Cart</div>;
+  return (
+    <>
+      <div className="row">
+        <div className="col">
+          <div className="border rounded p-4">
+            <ContactForm />
+          </div>
+        </div>
+        <div className="col">
+          <div className="border rounded p-4">
+            <SelectedItems />
+          </div>
+        </div>
+      </div>
+      <footer className="my-4 d-flex justify-content-end">
+        <div className="mx-5">Total price: </div>
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </footer>
+    </>
+  );
 }
