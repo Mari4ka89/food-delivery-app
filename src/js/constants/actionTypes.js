@@ -1,1 +1,2 @@
-export const FETCH_VENDORS = "FETCH_VENDORS";
+export const FETCH_MENU_ITEMS = "FETCH_MENU_ITEMS";
+export const SELECT_VENDOR = "SELECT_VENDOR";

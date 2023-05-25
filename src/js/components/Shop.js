@@ -1,5 +1,5 @@
 import Vendors from "./Vendors";
-import Menu from "./Menu";
+import { Outlet } from "react-router-dom";
 
 export default function Shop() {
   return (
@@ -9,7 +9,7 @@ export default function Shop() {
           <Vendors />
         </div>
         <div className="col-9">
-          <Menu />
+          <Outlet />
         </div>
       </div>
     </div>

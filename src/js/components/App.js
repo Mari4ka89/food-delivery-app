@@ -12,7 +12,7 @@ export default function App() {
               Shop
             </NavLink>
           </li>
-          <li className="nav-item">
+          <li className="nav-item px-3 border-start">
             <NavLink to="/cart" className={calculateNavLinkClass}>
               Shopping Cart
             </NavLink>

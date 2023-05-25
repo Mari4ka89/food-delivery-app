@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import vendorsReducer from "./reducers/vendorsReducer";
+import selectedVendorReducer from "./reducers/selectedVendorReducer";
 
 export const store = configureStore({
   reducer: {
-    vendors: vendorsReducer,
+    selectedVendorId: selectedVendorReducer,
   },
 });

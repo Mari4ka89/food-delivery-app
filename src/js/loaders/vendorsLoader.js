@@ -1,14 +1,16 @@
 import { json } from "react-router-dom";
-import { FETCH_VENDORS } from "../constants/actionTypes";
 
-const vendorsLoader = (dispatch) => async () => {
+const vendorsLoader = async () => {
   try {
     let response = await fetch("https://fakestoreapi.com/products/categories");
     let vendors = await response.json();
+    // As third-party API returns only list of vendors without ids, I add them manually.
+    let updatedVendors = vendors.map((vendor, index) => ({
+      vendor,
+      id: index,
+    }));
 
-    dispatch({ type: FETCH_VENDORS, vendors });
-
-    return vendors;
+    return updatedVendors;
   } catch (e) {
     throw json(
       { message: "Error occured while fetching vendors" },

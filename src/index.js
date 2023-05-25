@@ -1,17 +1,18 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { store } from "./js/store";
 import vendorsLoader from "./js/loaders/vendorsLoader";
+import menuLoader from "./js/loaders/menuLoader";
 import App from "./js/components/App";
 import ErrorPage from "./js/components/ErrorPage";
 import ShoppingCart from "./js/components/ShoppingCart";
 import Shop from "./js/components/Shop";
+import Menu from "./js/components/Menu";
 import "./css/index.css";
 
 function Index() {
-  const dispatch = useDispatch();
   const router = createBrowserRouter([
     {
       path: "/",
@@ -21,7 +22,14 @@ function Index() {
         {
           path: "/",
           element: <Shop />,
-          loader: vendorsLoader(dispatch),
+          loader: vendorsLoader,
+          children: [
+            {
+              path: "category/:vendorId",
+              element: <Menu />,
+              loader: menuLoader,
+            },
+          ],
         },
         {
           path: "/cart",
