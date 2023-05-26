@@ -3,7 +3,7 @@ import { json } from "react-router-dom";
 const menuLoader = async ({ params }) => {
   try {
     let response = await fetch(
-      `https://fakestoreapi.com/products/category/${params.vendorId}`
+      `http://fake-store-api.eu-4.evennode.com/products/category/${params.vendorId}`
     );
     let menuItems = await response.json();
 
