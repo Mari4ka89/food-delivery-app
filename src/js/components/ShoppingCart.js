@@ -6,11 +6,11 @@ import TotalPrice from "./TotalPrice";
 export default function ShoppingCart() {
   const formRef = useRef();
 
-  const handleSubmit = () => {
+  function handleSubmit() {
     if (formRef.current) {
       formRef.current.handleSubmit();
     }
-  };
+  }
 
   return (
     <>

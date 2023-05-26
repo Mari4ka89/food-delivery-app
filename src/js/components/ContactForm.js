@@ -1,8 +1,15 @@
 import { forwardRef } from "react";
 import { Formik } from "formik";
 import { string, number, object } from "yup";
+import { useSelector } from "react-redux";
 
 const ContactForm = forwardRef(function ContactForm(props, ref) {
+  const cart = useSelector((state) => state.cart);
+  const products = cart.map(({ productId, quantity }) => ({
+    productId,
+    quantity,
+  }));
+
   return (
     <Formik
       innerRef={ref}
@@ -13,8 +20,19 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
         address: "",
       }}
       onSubmit={async (values) => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        alert(JSON.stringify(values, null, 2));
+        try {
+          await fetch("http://fake-store-api.eu-4.evennode.com/orders", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ...values, products }),
+          });
+
+          alert("Order was placed successfully!");
+        } catch (err) {
+          alert("Please try to place order later.");
+        }
       }}
       validationSchema={object().shape({
         username: string().required("Required"),
