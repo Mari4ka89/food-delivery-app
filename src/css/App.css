@@ -5,3 +5,7 @@
 .validation-error {
   color: #ff0000;
 }
+
+.cursos-pointer {
+  cursor: pointer;
+}

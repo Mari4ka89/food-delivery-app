@@ -36,7 +36,7 @@ export default function cartReducer(state = [], action) {
       return [...state, action.product];
     }
     case REMOVE_PRODUCT_FROM_CART: {
-      return state.filter(({ id }) => id !== action.productId);
+      return state.filter(({ productId }) => productId !== action.productId);
     }
     case UPDATE_PRODUCT_IN_CART: {
       return updateProduct(state, action.productId, action.quantity);

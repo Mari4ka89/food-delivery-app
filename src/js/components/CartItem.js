@@ -1,5 +1,8 @@
 import { useDispatch } from "react-redux";
-import { UPDATE_PRODUCT_IN_CART } from "../constants/actionTypes";
+import {
+  REMOVE_PRODUCT_FROM_CART,
+  UPDATE_PRODUCT_IN_CART,
+} from "../constants/actionTypes";
 import "../../css/CartItem.css";
 
 export default function CartItem({ productId, quantity, image, title, price }) {
@@ -13,6 +16,13 @@ export default function CartItem({ productId, quantity, image, title, price }) {
     });
   }
 
+  function handleRemoveItem() {
+    dispatch({
+      type: REMOVE_PRODUCT_FROM_CART,
+      productId,
+    });
+  }
+
   return (
     <div className="CartItem card mb-3">
       <div className="row g-0">
@@ -20,6 +30,12 @@ export default function CartItem({ productId, quantity, image, title, price }) {
           <img src={image} className="img-fluid rounded-start" alt={title} />
         </div>
         <div className="col-md-8">
+          <div
+            className="float-end pe-2 cursos-pointer"
+            onClick={handleRemoveItem}
+          >
+            Х
+          </div>
           <div className="card-body text-center">
             <h5 className="card-title">{title}</h5>
             <h6>Price: {price}₴</h6>
