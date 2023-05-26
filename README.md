@@ -1,3 +1,5 @@
+# To see application running visit: http://food-delivery-app.eu-4.evennode.com/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
