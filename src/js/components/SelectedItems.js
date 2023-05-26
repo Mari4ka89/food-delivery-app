@@ -1,9 +1,14 @@
-import { useLoaderData } from "react-router-dom";
+import { useSelector } from "react-redux";
 import CartItem from "./CartItem";
 
 export default function SelectedItems() {
-  const menuItems = useLoaderData();
-  console.log("menuItems", menuItems);
+  const cart = useSelector((state) => state.cart);
 
-  return <CartItem />;
+  return (
+    <div>
+      {cart.map((item) => (
+        <CartItem key={item.productId} {...item} />
+      ))}
+    </div>
+  );
 }

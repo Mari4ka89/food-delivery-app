@@ -1,6 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Navigate,
+} from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./js/store";
 import vendorsLoader from "./js/loaders/vendorsLoader";
@@ -24,6 +28,10 @@ function Index() {
           element: <Shop />,
           loader: vendorsLoader,
           children: [
+            {
+              index: true,
+              element: <Navigate to="category/McDonalds" replace />,
+            },
             {
               path: "category/:vendorId",
               element: <Menu />,

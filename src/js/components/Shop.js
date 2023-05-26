@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 export default function Shop() {
   return (
-    <div className="h-100">
+    <>
       <div className="row">
         <div className="col-3">
           <Vendors />
@@ -12,6 +12,6 @@ export default function Shop() {
           <Outlet />
         </div>
       </div>
-    </div>
+    </>
   );
 }

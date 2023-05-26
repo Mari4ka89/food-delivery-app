@@ -8,7 +8,7 @@ export default function MenuItem({ info }) {
   function handleAddToCart() {
     dispatch({
       type: ADD_PRODUCT_TO_CART,
-      product: { productId: id, quantity: 1 },
+      product: { productId: id, quantity: 1, image, title, price },
     });
     dispatch({
       type: SELECT_VENDOR,
@@ -29,7 +29,7 @@ export default function MenuItem({ info }) {
           <h5 className="card-title">{title}</h5>
           <p className="card-text">{description}</p>
           <div className="d-flex justify-content-between">
-            <h6 className="card-title">{price}$</h6>
+            <h6 className="card-title">{price}₴</h6>
             <button className="btn btn-primary" onClick={handleAddToCart}>
               Add to Cart
             </button>

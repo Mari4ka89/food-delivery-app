@@ -14,10 +14,10 @@ function updateProduct(state, product) {
   });
 }
 
-function updateProductAmount(state, { productId, quantity }) {
+function updateProductAmount(state, product) {
   return state.map((item) => {
-    if (item.productId === productId) {
-      return { productId, quantity: item.quantity + quantity };
+    if (item.productId === product.productId) {
+      return { ...product, quantity: item.quantity + product.quantity };
     }
 
     return item;
