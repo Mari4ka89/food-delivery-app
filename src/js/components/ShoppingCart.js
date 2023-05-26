@@ -1,5 +1,6 @@
 import ContactForm from "./ContactForm";
 import SelectedItems from "./SelectedItems";
+import TotalPrice from "./TotalPrice";
 
 export default function ShoppingCart() {
   return (
@@ -17,7 +18,7 @@ export default function ShoppingCart() {
         </div>
       </div>
       <footer className="my-4 d-flex justify-content-end">
-        <div className="mx-5">Total price: </div>
+        <TotalPrice />
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
