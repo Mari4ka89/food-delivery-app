@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import "../../css/TotalPrice.css";
 
 export default function TotalPrice() {
   const cart = useSelector((state) => state.cart);
@@ -7,5 +8,5 @@ export default function TotalPrice() {
     0
   );
 
-  return <div className="mx-5">Total price: {amount}₴</div>;
+  return <span className="TotalPrice mx-5">Total price: {amount}₴</span>;
 }
