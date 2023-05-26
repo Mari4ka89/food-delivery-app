@@ -1,4 +1,17 @@
-export default function CartItem({ quantity, image, title, price }) {
+import { useDispatch } from "react-redux";
+import { UPDATE_PRODUCT_IN_CART } from "../constants/actionTypes";
+
+export default function CartItem({ productId, quantity, image, title, price }) {
+  const dispatch = useDispatch();
+
+  function handleAmountChange(e) {
+    dispatch({
+      type: UPDATE_PRODUCT_IN_CART,
+      productId,
+      quantity: parseInt(e.target.value),
+    });
+  }
+
   return (
     <div className="card mb-3">
       <div className="row g-0">
@@ -13,6 +26,7 @@ export default function CartItem({ quantity, image, title, price }) {
               <input
                 type="number"
                 className="form-control"
+                onChange={handleAmountChange}
                 defaultValue={quantity}
                 min="0"
               />

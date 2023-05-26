@@ -4,10 +4,10 @@ import {
   UPDATE_PRODUCT_IN_CART,
 } from "../constants/actionTypes";
 
-function updateProduct(state, product) {
+function updateProduct(state, productId, quantity) {
   return state.map((item) => {
-    if (item.productId === product.productId) {
-      return product;
+    if (item.productId === productId) {
+      return { ...item, quantity };
     }
 
     return item;
@@ -39,7 +39,7 @@ export default function cartReducer(state = [], action) {
       return state.filter(({ id }) => id !== action.productId);
     }
     case UPDATE_PRODUCT_IN_CART: {
-      return updateProduct(state, action.product);
+      return updateProduct(state, action.productId, action.quantity);
     }
     default:
       return state;
