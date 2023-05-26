@@ -4,7 +4,7 @@ import cartReducer from "./reducers/cartReducer";
 
 export const store = configureStore({
   reducer: {
-    selectedVendorId: selectedVendorReducer,
+    selectedVendor: selectedVendorReducer,
     cart: cartReducer,
   },
 });

@@ -1,11 +1,7 @@
-import { useLoaderData } from "react-router-dom";
 import ContactForm from "./ContactForm";
 import SelectedItems from "./SelectedItems";
 
 export default function ShoppingCart() {
-  const menuItems = useLoaderData();
-  console.log("menuItems", menuItems);
-
   return (
     <>
       <div className="row">
@@ -22,7 +18,7 @@ export default function ShoppingCart() {
       </div>
       <footer className="my-4 d-flex justify-content-end">
         <div className="mx-5">Total price: </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </footer>
