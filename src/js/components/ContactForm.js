@@ -1,9 +1,11 @@
 import { forwardRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
 import { string, number, object } from "yup";
-import { useSelector } from "react-redux";
+import { EMPTY_CART, RESET_SELECTED_VENDOR } from "../constants/actionTypes";
 
 const ContactForm = forwardRef(function ContactForm(props, ref) {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const products = cart.map(({ productId, quantity }) => ({
     productId,
@@ -30,6 +32,12 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
           });
 
           alert("Order was placed successfully!");
+          dispatch({
+            type: RESET_SELECTED_VENDOR,
+          });
+          dispatch({
+            type: EMPTY_CART,
+          });
         } catch (err) {
           alert("Please try to place order later.");
         }

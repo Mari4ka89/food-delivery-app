@@ -2,6 +2,7 @@ import {
   ADD_PRODUCT_TO_CART,
   REMOVE_PRODUCT_FROM_CART,
   UPDATE_PRODUCT_IN_CART,
+  EMPTY_CART,
 } from "../constants/actionTypes";
 
 function updateProduct(state, productId, quantity) {
@@ -40,6 +41,9 @@ export default function cartReducer(state = [], action) {
     }
     case UPDATE_PRODUCT_IN_CART: {
       return updateProduct(state, action.productId, action.quantity);
+    }
+    case EMPTY_CART: {
+      return [];
     }
     default:
       return state;
