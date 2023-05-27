@@ -7,6 +7,8 @@ import { EMPTY_CART, RESET_SELECTED_VENDOR } from "../constants/actionTypes";
 const ContactForm = forwardRef(function ContactForm(props, ref) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const { lat, lng } = useSelector((state) => state.mapLocation);
+  const geolocation = { lat, long: lng };
   const products = cart.map(({ productId, quantity }) => ({
     productId,
     quantity,
@@ -28,7 +30,7 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...values, products }),
+            body: JSON.stringify({ ...values, products, geolocation }),
           });
 
           alert("Order was placed successfully!");
