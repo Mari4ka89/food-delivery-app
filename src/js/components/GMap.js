@@ -12,7 +12,7 @@ export default function GMap() {
     googleMapsApiKey: "AIzaSyBdTWFXP5NEDg9O6_Mp9HeIXJ9IYBuZXMY",
   });
 
-  function onDragEnd({ latLng }) {
+  function handleMarkerDragEnd({ latLng }) {
     dispatch({
       type: USER_LOCATION_UPDATED,
       location: {
@@ -33,7 +33,7 @@ export default function GMap() {
           <MarkerF
             position={markerLocation}
             draggable={true}
-            onDragEnd={onDragEnd}
+            onDragEnd={handleMarkerDragEnd}
             icon={
               "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
             }

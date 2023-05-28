@@ -4,6 +4,13 @@ import { Formik } from "formik";
 import { string, number, object } from "yup";
 import { EMPTY_CART, RESET_SELECTED_VENDOR } from "../constants/actionTypes";
 
+const initialValues = {
+  username: "",
+  email: "",
+  phone: "",
+  address: "",
+};
+
 const ContactForm = forwardRef(function ContactForm(props, ref) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
@@ -17,22 +24,20 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
   return (
     <Formik
       innerRef={ref}
-      initialValues={{
-        username: "",
-        email: "",
-        phone: "",
-        address: "",
-      }}
+      initialValues={initialValues}
       onSubmit={async (values) => {
-        try {
-          await fetch("http://fake-store-api.eu-4.evennode.com/orders", {
+        let response = await fetch(
+          "http://fake-store-api.eu-4.evennode.com/orders",
+          {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ ...values, products, geolocation }),
-          });
+          }
+        );
 
+        if (response.status === 200) {
           alert("Order was placed successfully!");
           dispatch({
             type: RESET_SELECTED_VENDOR,
@@ -40,8 +45,9 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
           dispatch({
             type: EMPTY_CART,
           });
-        } catch (err) {
-          alert("Please try to place order later.");
+        } else {
+          alert("Try to place order later.");
+          throw new Error(`${response.status} for ${response.url}`);
         }
       }}
       validationSchema={object().shape({

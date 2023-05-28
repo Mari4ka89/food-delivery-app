@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import ContactForm from "./ContactForm";
 import SelectedItems from "./SelectedItems";
-import TotalPrice from "./TotalPrice";
 import GMap from "./GMap";
+import SubmitOrder from "./SubmitOrder";
 import "../../css/ShoppingCart.css";
 
 export default function ShoppingCart() {
@@ -30,16 +30,7 @@ export default function ShoppingCart() {
             <div className="border rounded flex-grow-1 overflow-auto p-3">
               <SelectedItems />
             </div>
-            <div className="my-3 d-flex justify-content-end">
-              <TotalPrice />
-              <button
-                type="submit"
-                className="btn btn-primary"
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            </div>
+            <SubmitOrder onSubmit={handleSubmit} />
           </div>
         </div>
       </div>
