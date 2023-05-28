@@ -31,7 +31,7 @@ export default function CartItem({ productId, quantity, image, title, price }) {
         </div>
         <div className="col-md-8">
           <div
-            className="float-end pe-2 cursos-pointer"
+            className="float-end pe-2 cursor-pointer"
             onClick={handleRemoveItem}
           >
             Х

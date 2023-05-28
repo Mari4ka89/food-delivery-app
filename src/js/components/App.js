@@ -1,6 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { calculateNavLinkClass } from "./../utils/cssUtils";
-import "../../css/App.css";
 
 export default function App() {
   return (

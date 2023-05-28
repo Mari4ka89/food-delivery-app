@@ -16,17 +16,15 @@ export default function GMap() {
     dispatch({
       type: USER_LOCATION_UPDATED,
       location: {
-        lat: parseFloat(latLng.lat()),
-        lng: parseFloat(latLng.lng()),
+        lat: latLng.lat(),
+        lng: latLng.lng(),
       },
     });
   }
 
   return (
     <div className="GMap w-100 h-100">
-      {!isLoaded ? (
-        <h1>Loading...</h1>
-      ) : (
+      {isLoaded ? (
         <GoogleMap
           mapContainerClassName="h-100 w-100"
           center={CENTER}
@@ -44,6 +42,8 @@ export default function GMap() {
             <MarkerF position={VENDORS_LOCATIONS[selectedVendor]} />
           ) : null}
         </GoogleMap>
+      ) : (
+        <h1>Loading...</h1>
       )}
     </div>
   );

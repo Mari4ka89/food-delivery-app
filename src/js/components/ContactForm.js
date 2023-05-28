@@ -62,7 +62,7 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
         } = props;
         return (
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
+            <div className="mb-1">
               <label htmlFor="username" className="form-label">
                 Name
               </label>
@@ -80,7 +80,7 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
                 <div className="validation-error">{errors.username}</div>
               )}
             </div>
-            <div className="mb-3">
+            <div className="mb-1">
               <label htmlFor="email" className="form-label">
                 Email
               </label>
@@ -98,7 +98,7 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
                 <div className="validation-error">{errors.email}</div>
               )}
             </div>
-            <div className="mb-3">
+            <div className="mb-1">
               <label htmlFor="phone" className="form-label">
                 Phone
               </label>
@@ -116,7 +116,7 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
                 <div className="validation-error">{errors.phone}</div>
               )}
             </div>
-            <div className="mb-3">
+            <div className="mb-1">
               <label htmlFor="address" className="form-label">
                 Address
               </label>
