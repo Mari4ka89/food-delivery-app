@@ -1,25 +1,20 @@
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import { useSelector, useDispatch } from "react-redux";
 import { CENTER, VENDORS_LOCATIONS } from "../constants/mapLocations";
-import { USER_LOCATION_UPDATED } from "../constants/actionTypes";
+import { API_KEY } from "../constants/apiKey";
+import { updateUserLocation } from "../reducers/mapLocationSlice";
 
 export default function GMap() {
   const selectedVendor = useSelector((state) => state.selectedVendor);
-  const markerLocation = useSelector((state) => state.mapLocation);
+  const markerLocation = useSelector((state) => state.mapLocation.value);
   const dispatch = useDispatch();
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyBdTWFXP5NEDg9O6_Mp9HeIXJ9IYBuZXMY",
+    googleMapsApiKey: API_KEY,
   });
 
   function handleMarkerDragEnd({ latLng }) {
-    dispatch({
-      type: USER_LOCATION_UPDATED,
-      location: {
-        lat: latLng.lat(),
-        lng: latLng.lng(),
-      },
-    });
+    dispatch(updateUserLocation({ lat: latLng.lat(), lng: latLng.lng() }));
   }
 
   return (
