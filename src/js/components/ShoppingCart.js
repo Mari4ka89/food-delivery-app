@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import ContactForm from "./ContactForm";
 import SelectedItems from "./SelectedItems";
-import GMap from "./GMap";
 import SubmitOrder from "./SubmitOrder";
 import "../../css/ShoppingCart.css";
 
@@ -19,9 +18,6 @@ export default function ShoppingCart() {
       <div className="row">
         <div className="col">
           <div className="border rounded p-3 content-body">
-            <div className="w-100 h-50">
-              <GMap />
-            </div>
             <ContactForm ref={formRef} />
           </div>
         </div>

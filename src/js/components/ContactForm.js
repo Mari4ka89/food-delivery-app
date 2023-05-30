@@ -1,10 +1,14 @@
 import { forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import { string, number, object } from "yup";
+import { fetchLocation } from "../api/fetchLocation";
+import GMap from "./GMap";
 import { EMPTY_CART, RESET_SELECTED_VENDOR } from "../constants/actionTypes";
+import { CENTER } from "../constants/mapLocations";
 
 const initialValues = {
+  geolocation: CENTER,
   username: "",
   email: "",
   phone: "",
@@ -14,18 +18,34 @@ const initialValues = {
 const ContactForm = forwardRef(function ContactForm(props, ref) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const { lat, lng } = useSelector((state) => state.mapLocation);
-  const geolocation = { lat, long: lng };
   const products = cart.map(({ productId, quantity }) => ({
     productId,
     quantity,
   }));
 
+  function handleLocationUpdated(form, location) {
+    form.setFieldValue("geolocation", location);
+
+    fetchLocation(location).then(({ results }) => {
+      form.setFieldValue("address", results[0].formatted_address);
+    });
+  }
+
+  function handleAddressChange(event) {
+    console.log("event.target.value", event.target.value);
+
+    debugger;
+  }
+
   return (
     <Formik
       innerRef={ref}
       initialValues={initialValues}
+      enableReinitialize={true}
       onSubmit={async (values) => {
+        const {
+          geolocation: { lat, lng },
+        } = values;
         let response = await fetch(
           "http://fake-store-api.eu-4.evennode.com/orders",
           {
@@ -33,7 +53,11 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...values, products, geolocation }),
+            body: JSON.stringify({
+              ...values,
+              ...{ lat, long: lng },
+              products,
+            }),
           }
         );
 
@@ -67,7 +91,14 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
           handleSubmit,
         } = props;
         return (
-          <form onSubmit={handleSubmit}>
+          <form className="h-100" onSubmit={handleSubmit}>
+            <div className="w-100 h-50">
+              <Field
+                name="geolocation"
+                component={GMap}
+                onLocationUpdated={handleLocationUpdated}
+              />
+            </div>
             <div className="mb-1">
               <label htmlFor="username" className="form-label">
                 Name
@@ -126,15 +157,12 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
               <label htmlFor="address" className="form-label">
                 Address
               </label>
-              <input
+              <Field
                 id="address"
                 name="address"
-                type="text"
-                placeholder="7835 New R oad"
+                placeholder="7835 New Road"
                 className="form-control"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.address}
+                onBlur={handleAddressChange}
               />
               {errors.address && touched.address && (
                 <div className="validation-error">{errors.address}</div>

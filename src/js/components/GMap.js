@@ -1,20 +1,18 @@
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { CENTER, VENDORS_LOCATIONS } from "../constants/mapLocations";
+import Spinner from "./Spinner";
 import { API_KEY } from "../constants/apiKey";
-import { updateUserLocation } from "../reducers/mapLocationSlice";
 
-export default function GMap() {
+export default function GMap({ field: { value }, form, onLocationUpdated }) {
   const selectedVendor = useSelector((state) => state.selectedVendor);
-  const markerLocation = useSelector((state) => state.mapLocation.value);
-  const dispatch = useDispatch();
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: API_KEY,
   });
 
   function handleMarkerDragEnd({ latLng }) {
-    dispatch(updateUserLocation({ lat: latLng.lat(), lng: latLng.lng() }));
+    onLocationUpdated(form, { lat: latLng.lat(), lng: latLng.lng() });
   }
 
   return (
@@ -26,7 +24,7 @@ export default function GMap() {
           zoom={10}
         >
           <MarkerF
-            position={markerLocation}
+            position={value}
             draggable={true}
             onDragEnd={handleMarkerDragEnd}
             icon={
@@ -38,7 +36,7 @@ export default function GMap() {
           ) : null}
         </GoogleMap>
       ) : (
-        <h1>Loading...</h1>
+        <Spinner />
       )}
     </div>
   );
