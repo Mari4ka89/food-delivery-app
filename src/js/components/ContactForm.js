@@ -6,6 +6,7 @@ import { fetchLocation } from "../api/fetchLocation";
 import GMap from "./GMap";
 import { EMPTY_CART, RESET_SELECTED_VENDOR } from "../constants/actionTypes";
 import { CENTER } from "../constants/mapLocations";
+import { API_KEY } from "../constants/apiKey";
 
 const initialValues = {
   geolocation: CENTER,
@@ -14,6 +15,7 @@ const initialValues = {
   phone: "",
   address: "",
 };
+const geoApiUrl = "https://maps.googleapis.com/maps/api/geocode/json";
 
 const ContactForm = forwardRef(function ContactForm(props, ref) {
   const dispatch = useDispatch();
@@ -23,18 +25,26 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
     quantity,
   }));
 
-  function handleLocationUpdated(form, location) {
-    form.setFieldValue("geolocation", location);
+  function handleLocationUpdated(form, { lat, lng }) {
+    const url = `${geoApiUrl}?latlng=${lat},${lng}&key=${API_KEY}`;
 
-    fetchLocation(location).then(({ results }) => {
+    form.setFieldValue("geolocation", { lat, lng });
+
+    fetchLocation(url).then(({ results }) => {
       form.setFieldValue("address", results[0].formatted_address);
     });
   }
 
-  function handleAddressChange(event) {
-    console.log("event.target.value", event.target.value);
+  function handleAddressChange({ target: { value } }, form) {
+    let urlQuery = value
+      .replace(/,\s(\d+)/, " $1")
+      .replace(/,\s\d{5}$/, "")
+      .replace(/\s/g, "+");
+    const url = `${geoApiUrl}?address=${urlQuery}&key=${API_KEY}`;
 
-    debugger;
+    fetchLocation(url).then(({ results }) => {
+      form.setFieldValue("geolocation", results[0].geometry.location);
+    });
   }
 
   return (
@@ -82,14 +92,7 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
       })}
     >
       {(props) => {
-        const {
-          values,
-          touched,
-          errors,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-        } = props;
+        const { touched, errors, handleSubmit } = props;
         return (
           <form className="h-100" onSubmit={handleSubmit}>
             <div className="w-100 h-50">
@@ -103,15 +106,11 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
               <label htmlFor="username" className="form-label">
                 Name
               </label>
-              <input
+              <Field
                 id="username"
                 name="username"
-                type="text"
                 placeholder="John Doe"
                 className="form-control"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.username}
               />
               {errors.username && touched.username && (
                 <div className="validation-error">{errors.username}</div>
@@ -121,15 +120,11 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
               <label htmlFor="email" className="form-label">
                 Email
               </label>
-              <input
+              <Field
                 id="email"
                 name="email"
-                type="email"
                 placeholder="jdoe@gmail.com"
                 className="form-control"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
               />
               {errors.email && touched.email && (
                 <div className="validation-error">{errors.email}</div>
@@ -139,15 +134,11 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
               <label htmlFor="phone" className="form-label">
                 Phone
               </label>
-              <input
+              <Field
                 id="phone"
                 name="phone"
-                type="text"
                 placeholder="0958761234"
                 className="form-control"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.phone}
               />
               {errors.phone && touched.phone && (
                 <div className="validation-error">{errors.phone}</div>
@@ -157,13 +148,18 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
               <label htmlFor="address" className="form-label">
                 Address
               </label>
-              <Field
-                id="address"
-                name="address"
-                placeholder="7835 New Road"
-                className="form-control"
-                onBlur={handleAddressChange}
-              />
+              <Field name="address">
+                {({ field, form, meta }) => (
+                  <input
+                    type="text"
+                    {...field}
+                    id="address"
+                    className="form-control"
+                    onBlur={(e) => handleAddressChange(e, form)}
+                    placeholder="Hazova St, 9, L'viv, L'vivs'ka oblast, Ukraine"
+                  />
+                )}
+              </Field>
               {errors.address && touched.address && (
                 <div className="validation-error">{errors.address}</div>
               )}
