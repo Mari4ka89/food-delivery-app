@@ -1,12 +1,12 @@
 import { SELECT_VENDOR, RESET_SELECTED_VENDOR } from "../constants/actionTypes";
 
-export default function slectedVendorReducer(state = null, action) {
+export default function slectedVendorReducer(state = "", action) {
   switch (action.type) {
     case SELECT_VENDOR: {
       return action.vendor;
     }
     case RESET_SELECTED_VENDOR: {
-      return null;
+      return "";
     }
     default:
       return state;

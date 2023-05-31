@@ -21,7 +21,7 @@ export default function GMap({ field: { value }, form, onLocationUpdated }) {
         <GoogleMap
           mapContainerClassName="h-100 w-100"
           center={CENTER}
-          zoom={10}
+          zoom={12}
         >
           <MarkerF
             position={value}
