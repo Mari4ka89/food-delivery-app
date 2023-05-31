@@ -7,7 +7,11 @@ export default function SelectedItems() {
   return (
     <div className="m-3">
       {cart.map((item) => (
-        <CartItem key={item.productId} {...item} />
+        <CartItem
+          key={item.productId}
+          isOneAndOnly={cart.length === 1}
+          {...item}
+        />
       ))}
     </div>
   );

@@ -2,10 +2,18 @@ import { useDispatch } from "react-redux";
 import {
   REMOVE_PRODUCT_FROM_CART,
   UPDATE_PRODUCT_IN_CART,
+  RESET_SELECTED_VENDOR,
 } from "../constants/actionTypes";
 import "../../css/CartItem.css";
 
-export default function CartItem({ productId, quantity, image, title, price }) {
+export default function CartItem({
+  productId,
+  quantity,
+  image,
+  title,
+  price,
+  isOneAndOnly,
+}) {
   const dispatch = useDispatch();
 
   function handleAmountChange(e) {
@@ -21,6 +29,11 @@ export default function CartItem({ productId, quantity, image, title, price }) {
       type: REMOVE_PRODUCT_FROM_CART,
       productId,
     });
+
+    isOneAndOnly &&
+      dispatch({
+        type: RESET_SELECTED_VENDOR,
+      });
   }
 
   return (

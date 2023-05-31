@@ -14,6 +14,7 @@ import ErrorPage from "./js/components/ErrorPage";
 import ShoppingCart from "./js/components/ShoppingCart";
 import Shop from "./js/components/Shop";
 import Menu from "./js/components/Menu";
+import { localStorageSelectedVendor } from "./js/utils/localStorageUtils";
 import "./css/index.css";
 
 function Index() {
@@ -30,7 +31,14 @@ function Index() {
           children: [
             {
               index: true,
-              element: <Navigate to="category/McDonalds" replace />,
+              element: (
+                <Navigate
+                  to={`category/${
+                    JSON.parse(localStorageSelectedVendor) || "McDonalds"
+                  }`}
+                  replace
+                />
+              ),
             },
             {
               path: "category/:vendorId",
