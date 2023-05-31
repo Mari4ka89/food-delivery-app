@@ -1,41 +1,32 @@
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { CENTER, VENDORS_LOCATIONS } from "../constants/mapLocations";
-import { USER_LOCATION_UPDATED } from "../constants/actionTypes";
+import Spinner from "./Spinner";
+import { API_KEY } from "../constants/apiKey";
 
-export default function GMap() {
+export default function GMap({ field: { value }, form, onLocationUpdated }) {
   const selectedVendor = useSelector((state) => state.selectedVendor);
-  const markerLocation = useSelector((state) => state.mapLocation);
-  const dispatch = useDispatch();
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyBdTWFXP5NEDg9O6_Mp9HeIXJ9IYBuZXMY",
+    googleMapsApiKey: API_KEY,
   });
 
-  function onDragEnd({ latLng }) {
-    dispatch({
-      type: USER_LOCATION_UPDATED,
-      location: {
-        lat: parseFloat(latLng.lat()),
-        lng: parseFloat(latLng.lng()),
-      },
-    });
+  function handleMarkerDragEnd({ latLng }) {
+    onLocationUpdated(form, { lat: latLng.lat(), lng: latLng.lng() });
   }
 
   return (
     <div className="GMap w-100 h-100">
-      {!isLoaded ? (
-        <h1>Loading...</h1>
-      ) : (
+      {isLoaded ? (
         <GoogleMap
           mapContainerClassName="h-100 w-100"
           center={CENTER}
-          zoom={10}
+          zoom={12}
         >
           <MarkerF
-            position={markerLocation}
+            position={value}
             draggable={true}
-            onDragEnd={onDragEnd}
+            onDragEnd={handleMarkerDragEnd}
             icon={
               "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
             }
@@ -44,6 +35,8 @@ export default function GMap() {
             <MarkerF position={VENDORS_LOCATIONS[selectedVendor]} />
           ) : null}
         </GoogleMap>
+      ) : (
+        <Spinner />
       )}
     </div>
   );

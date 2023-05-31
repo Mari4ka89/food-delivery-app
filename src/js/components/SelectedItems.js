@@ -5,7 +5,7 @@ export default function SelectedItems() {
   const cart = useSelector((state) => state.cart);
 
   return (
-    <div>
+    <div className="m-3">
       {cart.map((item) => (
         <CartItem key={item.productId} {...item} />
       ))}
