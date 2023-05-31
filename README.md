@@ -1,4 +1,5 @@
-# To see application running visit: http://food-delivery-app.eu-4.evennode.com/
+# To see application running visit: http://food-delivery-app.eu-4.evennode.com/ (3 work days)
+# Development continuation in dev branch: http://food-delivery-dev.eu-4.evennode.com/
 
 # Getting Started with Create React App
 
