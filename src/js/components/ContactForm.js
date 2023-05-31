@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import { string, number, object } from "yup";
 import { fetchLocation } from "../api/fetchLocation";
+import { placeOrder } from "../api/placeOrder";
 import GMap from "./GMap";
 import { EMPTY_CART, RESET_SELECTED_VENDOR } from "../constants/actionTypes";
 import { CENTER } from "../constants/mapLocations";
@@ -30,21 +31,52 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
 
     form.setFieldValue("geolocation", { lat, lng });
 
-    fetchLocation(url).then(({ results }) => {
-      form.setFieldValue("address", results[0].formatted_address);
-    });
+    fetchLocation(url)
+      .then(({ results }) => {
+        form.setFieldValue("address", results[0].formatted_address);
+      })
+      .catch(() => alert("Please set coordinates correctly."));
   }
 
   function handleAddressChange({ target: { value } }, form) {
-    let urlQuery = value
-      .replace(/,\s(\d+)/, " $1")
-      .replace(/,\s\d{5}$/, "")
-      .replace(/\s/g, "+");
-    const url = `${geoApiUrl}?address=${urlQuery}&key=${API_KEY}`;
+    if (value) {
+      let urlQuery = value
+        .replace(/,\s(\d+)/, " $1")
+        .replace(/,\s\d{5}$/, "")
+        .replace(/\s/g, "+");
+      const url = `${geoApiUrl}?address=${urlQuery}&key=${API_KEY}`;
 
-    fetchLocation(url).then(({ results }) => {
-      form.setFieldValue("geolocation", results[0].geometry.location);
-    });
+      fetchLocation(url)
+        .then(({ results }) => {
+          form.setFieldValue("geolocation", results[0].geometry.location);
+        })
+        .catch(() => alert("Please enter address correctly."));
+    }
+  }
+
+  function handleSubmit(values, actions) {
+    const {
+      geolocation: { lat, lng },
+    } = values;
+
+    placeOrder({
+      ...values,
+      ...{ lat, long: lng },
+      products,
+    })
+      .then(() => {
+        alert("Order was placed successfully!");
+        dispatch({
+          type: RESET_SELECTED_VENDOR,
+        });
+        dispatch({
+          type: EMPTY_CART,
+        });
+        actions.resetForm({
+          values: initialValues,
+        });
+      })
+      .catch(() => alert("Try to place order later."));
   }
 
   return (
@@ -52,38 +84,7 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
       innerRef={ref}
       initialValues={initialValues}
       enableReinitialize={true}
-      onSubmit={async (values) => {
-        const {
-          geolocation: { lat, lng },
-        } = values;
-        let response = await fetch(
-          "http://fake-store-api.eu-4.evennode.com/orders",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              ...values,
-              ...{ lat, long: lng },
-              products,
-            }),
-          }
-        );
-
-        if (response.status === 200) {
-          alert("Order was placed successfully!");
-          dispatch({
-            type: RESET_SELECTED_VENDOR,
-          });
-          dispatch({
-            type: EMPTY_CART,
-          });
-        } else {
-          alert("Try to place order later.");
-          throw new Error(`${response.status} for ${response.url}`);
-        }
-      }}
+      onSubmit={handleSubmit}
       validationSchema={object().shape({
         username: string().required("Required"),
         email: string().email().required("Required"),
@@ -149,7 +150,7 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
                 Address
               </label>
               <Field name="address">
-                {({ field, form, meta }) => (
+                {({ field, form }) => (
                   <input
                     type="text"
                     {...field}
