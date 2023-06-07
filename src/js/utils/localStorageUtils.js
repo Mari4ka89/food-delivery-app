@@ -1,3 +1,12 @@
-export const localStorageSelectedVendor =
-  localStorage.getItem("selectedVendor");
-export const localStorageCart = localStorage.getItem("cart");
+"use client";
+
+let localStorageSelectedVendor;
+let localStorageCart;
+
+if (typeof window !== "undefined") {
+  localStorageSelectedVendor = localStorage.getItem("selectedVendor");
+  localStorageCart = localStorage.getItem("cart");
+}
+
+export { localStorageSelectedVendor };
+export { localStorageCart };

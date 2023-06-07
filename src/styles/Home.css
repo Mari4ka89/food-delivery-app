@@ -1,0 +1,17 @@
+.content {
+  padding: 65px 0 10px;
+  height: 100vh;
+}
+
+.content-body {
+  overflow: auto;
+  height: calc(100vh - 80px);
+}
+
+.validation-error {
+  color: #ff0000;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

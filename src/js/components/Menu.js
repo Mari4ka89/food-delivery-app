@@ -1,8 +1,13 @@
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { menuLoader } from "../loaders/menuLoader";
 import MenuItem from "./MenuItem";
 
 export default function Menu() {
-  const items = useLoaderData();
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    setItems(menuLoader({ params: { vendorId: "McDonalds" } }));
+  }, []);
 
   return (
     <main className="content-body pe-3">

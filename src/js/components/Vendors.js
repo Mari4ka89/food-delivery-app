@@ -1,8 +1,13 @@
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { vendorsLoader } from "../loaders/vendorsLoader";
 import Vendor from "./Vendor";
 
 export default function Vendors() {
-  const vendors = useLoaderData();
+  const [vendors, setVendors] = useState([]);
+
+  useEffect(() => {
+    setVendors(vendorsLoader());
+  }, []);
 
   return (
     <aside className="content-body border rounded text-center px-5 py-2">

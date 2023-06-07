@@ -4,7 +4,7 @@ import {
   UPDATE_PRODUCT_IN_CART,
   RESET_SELECTED_VENDOR,
 } from "../constants/actionTypes";
-import "../../css/CartItem.css";
+//import "../../css/CartItem.css";
 
 export default function CartItem({
   productId,

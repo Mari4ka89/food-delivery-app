@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { calculateNavLinkClass } from "./../utils/cssUtils";
-import "../../css/Vendor.css";
+// import "../../css/Vendor.css";
 
 export default function Vendor({ name }) {
   const selectedVendor = useSelector((state) => state.selectedVendor);
