@@ -1,11 +1,11 @@
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../hooks";
 import { CENTER, VENDORS_LOCATIONS } from "../constants/mapLocations";
 import Spinner from "./Spinner";
 import { API_KEY } from "../constants/apiKey";
 
 export default function GMap({ field: { value }, form, onLocationUpdated }) {
-  const selectedVendor = useSelector((state) => state.selectedVendor);
+  const selectedVendor = useAppSelector((state) => state.selectedVendor);
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: API_KEY,

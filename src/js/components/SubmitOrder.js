@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../hooks";
 
 export default function SubmitOrder({ onSubmit }) {
-  const cart = useSelector((state) => state.cart);
+  const cart = useAppSelector((state) => state.cart);
   const amount = cart.reduce(
     (acc, prev) => (acc += prev.price * prev.quantity),
     0

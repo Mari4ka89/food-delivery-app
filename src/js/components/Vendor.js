@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { calculateNavLinkClass } from "./../utils/cssUtils";
+import { useAppSelector } from "../hooks";
+import { calculateNavLinkClass } from "../utils/cssUtils";
 import "../../css/Vendor.css";
 
 export default function Vendor({ name }) {
-  const selectedVendor = useSelector((state) => state.selectedVendor);
+  const selectedVendor = useAppSelector((state) => state.selectedVendor);
 
   function getClassName({ isActive, isPending }) {
     return selectedVendor && selectedVendor !== name

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../hooks";
 import {
   REMOVE_PRODUCT_FROM_CART,
   UPDATE_PRODUCT_IN_CART,
@@ -14,7 +14,7 @@ export default function CartItem({
   price,
   isOneAndOnly,
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleAmountChange(e) {
     dispatch({

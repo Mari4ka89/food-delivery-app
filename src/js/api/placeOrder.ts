@@ -1,6 +1,6 @@
 import { checkResponseStatus } from "../utils/apiUtils";
 
-export async function placeOrder(order) {
+export async function placeOrder(order: any) {
   let response = await fetch("http://fake-store-api.eu-4.evennode.com/orders", {
     method: "POST",
     headers: {

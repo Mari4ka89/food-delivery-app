@@ -1,9 +1,10 @@
 import { forwardRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector } from "../hooks";
 import { Formik, Field } from "formik";
 import { string, number, object } from "yup";
 import { fetchLocation } from "../api/fetchLocation";
 import { placeOrder } from "../api/placeOrder";
+import { useAppDispatch } from "../hooks";
 import GMap from "./GMap";
 import { EMPTY_CART, RESET_SELECTED_VENDOR } from "../constants/actionTypes";
 import { CENTER } from "../constants/mapLocations";
@@ -19,8 +20,8 @@ const initialValues = {
 const geoApiUrl = "https://maps.googleapis.com/maps/api/geocode/json";
 
 const ContactForm = forwardRef(function ContactForm(props, ref) {
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector((state) => state.cart);
   const products = cart.map(({ productId, quantity }) => ({
     productId,
     quantity,

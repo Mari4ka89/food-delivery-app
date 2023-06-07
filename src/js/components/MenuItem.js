@@ -1,8 +1,8 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../hooks";
 import { ADD_PRODUCT_TO_CART, SELECT_VENDOR } from "../constants/actionTypes";
 
 export default function MenuItem({ info }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { title, price, description, image, category, id } = info;
 
   function handleAddToCart() {

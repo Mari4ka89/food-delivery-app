@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../hooks";
 import CartItem from "./CartItem";
 
 export default function SelectedItems() {
-  const cart = useSelector((state) => state.cart);
+  const cart = useAppSelector((state) => state.cart);
 
   return (
     <div className="m-3">

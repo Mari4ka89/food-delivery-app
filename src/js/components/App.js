@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 import { calculateNavLinkClass } from "../utils/cssUtils";
 import { localStorageSelectedVendor } from "../utils/localStorageUtils";
+import { useAppSelector } from "../hooks";
 
 export default function App() {
   let selectedVendor = "McDonalds";
-  let stateVendor = useSelector((state) => state.selectedVendor);
+  let stateVendor = useAppSelector((state) => state.selectedVendor);
   let localStorageVendor = JSON.parse(localStorageSelectedVendor);
 
   if (stateVendor) {
