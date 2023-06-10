@@ -2,18 +2,19 @@ import { NavLink, Outlet } from "react-router-dom";
 import { calculateNavLinkClass } from "../utils/cssUtils";
 import { localStorageSelectedVendor } from "../utils/localStorageUtils";
 import { useAppSelector } from "../hooks";
+import { selectedVendor } from "../reducers/selectedVendorSlice";
 
 export default function App() {
-  let selectedVendor = "McDonalds";
-  let stateVendor = useAppSelector((state) => state.selectedVendor);
+  let vendor = "McDonalds";
+  let stateVendor = useAppSelector(selectedVendor);
   let localStorageVendor = JSON.parse(localStorageSelectedVendor);
 
   if (stateVendor) {
-    selectedVendor = stateVendor;
+    vendor = stateVendor;
   }
 
   if (localStorageVendor) {
-    selectedVendor = localStorageVendor;
+    vendor = localStorageVendor;
   }
 
   return (
@@ -23,7 +24,7 @@ export default function App() {
           <ul className="nav nav-underline py-2">
             <li className="nav-item">
               <NavLink
-                to={`/category/${selectedVendor}`}
+                to={`/category/${vendor}`}
                 className={calculateNavLinkClass}
               >
                 Shop

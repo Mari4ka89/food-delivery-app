@@ -1,12 +1,12 @@
 import { forwardRef } from "react";
-import { useAppSelector } from "../hooks";
 import { Formik, Field } from "formik";
 import { string, number, object } from "yup";
 import { fetchLocation } from "../api/fetchLocation";
 import { placeOrder } from "../api/placeOrder";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import GMap from "./GMap";
-import { EMPTY_CART, RESET_SELECTED_VENDOR } from "../constants/actionTypes";
+import { cartDropped } from "../reducers/cartSlice";
+import { vendorReset } from "../reducers/selectedVendorSlice";
 import { CENTER } from "../constants/mapLocations";
 import { API_KEY } from "../constants/apiKey";
 
@@ -67,12 +67,8 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
     })
       .then(() => {
         alert("Order was placed successfully!");
-        dispatch({
-          type: RESET_SELECTED_VENDOR,
-        });
-        dispatch({
-          type: EMPTY_CART,
-        });
+        dispatch(vendorReset());
+        dispatch(cartDropped());
         actions.resetForm({
           values: initialValues,
         });

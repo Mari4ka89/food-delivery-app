@@ -1,19 +1,22 @@
 import { useAppDispatch } from "../hooks";
-import { ADD_PRODUCT_TO_CART, SELECT_VENDOR } from "../constants/actionTypes";
+import { productAdded } from "../reducers/cartSlice";
+import { vendorSelected } from "../reducers/selectedVendorSlice";
 
 export default function MenuItem({ info }) {
   const dispatch = useAppDispatch();
   const { title, price, description, image, category, id } = info;
 
   function handleAddToCart() {
-    dispatch({
-      type: ADD_PRODUCT_TO_CART,
-      product: { productId: id, quantity: 1, image, title, price },
-    });
-    dispatch({
-      type: SELECT_VENDOR,
-      vendor: category,
-    });
+    dispatch(
+      productAdded({
+        productId: id,
+        quantity: 1,
+        image,
+        title,
+        price,
+      })
+    );
+    dispatch(vendorSelected(category));
   }
 
   return (

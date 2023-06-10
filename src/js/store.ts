@@ -1,6 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
-import selectedVendorReducer from "./reducers/selectedVendorReducer";
-import cartReducer from "./reducers/cartReducer";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import selectedVendorReducer from "./reducers/selectedVendorSlice";
+import cartReducer from "./reducers/cartSlice";
 import {
   localStorageSelectedVendor,
   localStorageCart,
@@ -13,11 +13,13 @@ const persistentVendorState = localStorageSelectedVendor
   ? JSON.parse(localStorageSelectedVendor)
   : "";
 
+const rootReducer = combineReducers({
+  selectedVendor: selectedVendorReducer,
+  cart: cartReducer,
+});
+
 export const store = configureStore({
-  reducer: {
-    selectedVendor: selectedVendorReducer,
-    cart: cartReducer,
-  },
+  reducer: rootReducer,
   preloadedState: {
     cart: persistentCartState,
     selectedVendor: persistentVendorState,
