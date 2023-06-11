@@ -1,7 +1,17 @@
+import { ChangeEvent } from "react";
 import { useAppDispatch } from "../hooks";
 import { productRemoved, productQuantityUpdated } from "../reducers/cartSlice";
 import { vendorReset } from "../reducers/selectedVendorSlice";
 import "../../css/CartItem.css";
+
+type CartItemProps = {
+  productId: string;
+  quantity: number;
+  image: string;
+  title: string;
+  price: number;
+  isOneAndOnly: boolean;
+};
 
 export default function CartItem({
   productId,
@@ -10,14 +20,14 @@ export default function CartItem({
   title,
   price,
   isOneAndOnly,
-}) {
+}: CartItemProps) {
   const dispatch = useAppDispatch();
 
-  function handleAmountChange(e) {
+  function handleAmountChange(e: ChangeEvent<HTMLInputElement>) {
     dispatch(
       productQuantityUpdated({
         productId,
-        quantity: parseInt(e.target.value || 0),
+        quantity: parseInt(e.target.value || "0"),
       })
     );
   }

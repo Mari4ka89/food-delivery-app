@@ -11,7 +11,7 @@ const persistentCartState = localStorageCart
   : [];
 const persistentVendorState = localStorageSelectedVendor
   ? JSON.parse(localStorageSelectedVendor)
-  : "";
+  : null;
 
 const rootReducer = combineReducers({
   selectedVendor: selectedVendorReducer,

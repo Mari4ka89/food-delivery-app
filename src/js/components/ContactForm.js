@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, FocusEvent } from "react";
 import { Formik, Field } from "formik";
 import { string, number, object } from "yup";
 import { fetchLocation } from "../api/fetchLocation";
@@ -153,7 +153,9 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
                     {...field}
                     id="address"
                     className="form-control"
-                    onBlur={(e) => handleAddressChange(e, form)}
+                    onBlur={(e: FocusEvent<HTMLInputElement>) =>
+                      handleAddressChange(e, form)
+                    }
                     placeholder="Hazova St, 9, L'viv, L'vivs'ka oblast, Ukraine"
                   />
                 )}

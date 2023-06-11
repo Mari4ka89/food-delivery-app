@@ -5,17 +5,9 @@ import { useAppSelector } from "../hooks";
 import { selectedVendor } from "../reducers/selectedVendorSlice";
 
 export default function App() {
-  let vendor = "McDonalds";
   let stateVendor = useAppSelector(selectedVendor);
   let localStorageVendor = JSON.parse(localStorageSelectedVendor);
-
-  if (stateVendor) {
-    vendor = stateVendor;
-  }
-
-  if (localStorageVendor) {
-    vendor = localStorageVendor;
-  }
+  let vendor = stateVendor || localStorageVendor || "McDonalds";
 
   return (
     <div className="App">

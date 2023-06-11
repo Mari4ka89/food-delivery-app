@@ -1,6 +1,10 @@
 import { useAppSelector } from "../hooks";
 
-export default function SubmitOrder({ onSubmit }) {
+type SubmitOrderProps = {
+  handleSubmit: () => void;
+};
+
+export default function SubmitOrder({ handleSubmit }: SubmitOrderProps) {
   const cart = useAppSelector((state) => state.cart);
   const amount = cart.reduce(
     (acc, prev) => (acc += prev.price * prev.quantity),
@@ -11,7 +15,7 @@ export default function SubmitOrder({ onSubmit }) {
   return (
     <div className="my-3 d-flex justify-content-end">
       <span className="TotalPrice mx-5">Total price: {amount}₴</span>
-      <button type="submit" className={btnClassName} onClick={onSubmit}>
+      <button type="submit" className={btnClassName} onClick={handleSubmit}>
         Submit
       </button>
     </div>

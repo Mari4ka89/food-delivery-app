@@ -3,13 +3,13 @@ import { RootState } from "../store";
 
 const selectedVendorSlice = createSlice({
   name: "selectedVendor",
-  initialState: "",
+  initialState: null,
   reducers: {
     vendorSelected(_state, action: PayloadAction<string>) {
       return action.payload;
     },
     vendorReset() {
-      return "";
+      return null;
     },
   },
 });

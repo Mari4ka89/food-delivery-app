@@ -26,7 +26,7 @@ export default function ShoppingCart() {
             <div className="border rounded flex-grow-1 overflow-auto p-3">
               <SelectedItems />
             </div>
-            <SubmitOrder onSubmit={handleSubmit} />
+            <SubmitOrder handleSubmit={handleSubmit} />
           </div>
         </div>
       </div>
