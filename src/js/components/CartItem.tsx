@@ -2,16 +2,12 @@ import { ChangeEvent } from "react";
 import { useAppDispatch } from "../hooks";
 import { productRemoved, productQuantityUpdated } from "../reducers/cartSlice";
 import { vendorReset } from "../reducers/selectedVendorSlice";
+import { MenuItemProps } from "../components/MenuItem";
 import "../../css/CartItem.css";
 
-type CartItemProps = {
-  productId: string;
-  quantity: number;
-  image: string;
-  title: string;
-  price: number;
+interface CartItemProps extends MenuItemProps {
   isOneAndOnly: boolean;
-};
+}
 
 export default function CartItem({
   productId,

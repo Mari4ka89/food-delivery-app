@@ -2,6 +2,17 @@ import { useAppDispatch } from "../hooks";
 import { productAdded } from "../reducers/cartSlice";
 import { vendorSelected } from "../reducers/selectedVendorSlice";
 
+export interface Product {
+  image: string;
+  title: string;
+  price: number;
+}
+
+export interface MenuItemProps extends Product {
+  productId: string;
+  quantity: number;
+}
+
 export default function MenuItem({ info }) {
   const dispatch = useAppDispatch();
   const { title, price, description, image, category, id } = info;

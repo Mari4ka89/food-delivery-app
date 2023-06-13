@@ -5,7 +5,7 @@ import SubmitOrder from "./SubmitOrder";
 import "../../css/ShoppingCart.css";
 
 export default function ShoppingCart() {
-  const formRef = useRef();
+  const formRef = useRef<HTMLFormElement>(null!);
 
   function handleSubmit() {
     if (formRef.current) {
