@@ -1,15 +1,16 @@
 import { useAppSelector } from "../hooks";
 import CartItem from "./CartItem";
+import { cart } from "../reducers/cartSlice";
 
 export default function SelectedItems() {
-  const cart = useAppSelector((state) => state.cart);
+  const savedCart = useAppSelector(cart);
 
   return (
     <div className="m-3">
-      {cart.map((item) => (
+      {savedCart.map((item) => (
         <CartItem
           key={item.productId}
-          isOneAndOnly={cart.length === 1}
+          isOneAndOnly={savedCart.length === 1}
           {...item}
         />
       ))}

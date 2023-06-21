@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../hooks";
+import { selectedVendor } from "../reducers/selectedVendorSlice";
 import { calculateNavLinkClass } from "../utils/cssUtils";
 import "../../css/Vendor.css";
 
 export default function Vendor({ name }) {
-  const selectedVendor = useAppSelector((state) => state.selectedVendor);
+  const savedSelectedVendor = useAppSelector(selectedVendor);
 
   function getClassName({ isActive, isPending }) {
-    return selectedVendor && selectedVendor !== name
+    return savedSelectedVendor && savedSelectedVendor !== name
       ? "nav-link disabled"
       : calculateNavLinkClass({ isActive, isPending });
   }

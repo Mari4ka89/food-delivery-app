@@ -1,11 +1,13 @@
 import { useRef } from "react";
+import { FormikProps } from "formik";
+import { FormValues } from "./ContactForm";
 import ContactForm from "./ContactForm";
 import SelectedItems from "./SelectedItems";
 import SubmitOrder from "./SubmitOrder";
 import "../../css/ShoppingCart.css";
 
 export default function ShoppingCart() {
-  const formRef = useRef<HTMLFormElement>(null!);
+  const formRef = useRef<FormikProps<FormValues>>(null);
 
   function handleSubmit() {
     if (formRef.current) {

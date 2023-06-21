@@ -2,7 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import Vendor from "./Vendor";
 
 export default function Vendors() {
-  const vendors = useLoaderData();
+  const vendors = useLoaderData() as string[];
 
   return (
     <aside className="content-body border rounded text-center px-5 py-2">

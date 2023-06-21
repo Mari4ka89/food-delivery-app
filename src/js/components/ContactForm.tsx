@@ -1,14 +1,22 @@
 import { forwardRef, FocusEvent } from "react";
-import { Formik, Field } from "formik";
+import { Formik, Field, FormikProps, FormikHelpers } from "formik";
 import { string, number, object } from "yup";
 import { fetchLocation } from "../api/fetchLocation";
 import { placeOrder } from "../api/placeOrder";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import GMap from "./GMap";
-import { cartDropped } from "../reducers/cartSlice";
+import GMap, { Coordinates } from "./GMap";
+import { cartDropped, cart } from "../reducers/cartSlice";
 import { vendorReset } from "../reducers/selectedVendorSlice";
 import { CENTER } from "../constants/mapLocations";
 import { API_KEY } from "../constants/apiKey";
+
+export type FormValues = {
+  geolocation: Coordinates;
+  username: string;
+  email: string;
+  phone: string;
+  address: string;
+};
 
 const initialValues = {
   geolocation: CENTER,
@@ -19,15 +27,15 @@ const initialValues = {
 };
 const geoApiUrl = "https://maps.googleapis.com/maps/api/geocode/json";
 
-const ContactForm = forwardRef(function ContactForm(props, ref) {
+const ContactForm = forwardRef(function ContactForm(_props, ref) {
   const dispatch = useAppDispatch();
-  const cart = useAppSelector((state) => state.cart);
-  const products = cart.map(({ productId, quantity }) => ({
+  const savedCart = useAppSelector(cart);
+  const products = savedCart.map(({ productId, quantity }) => ({
     productId,
     quantity,
   }));
 
-  function handleLocationUpdated(form, { lat, lng }) {
+  function handleLocationUpdated(form: FormikProps<string>, { lat, lng }) {
     const url = `${geoApiUrl}?latlng=${lat},${lng}&key=${API_KEY}`;
 
     form.setFieldValue("geolocation", { lat, lng });
@@ -39,7 +47,10 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
       .catch(() => alert("Please set coordinates correctly."));
   }
 
-  function handleAddressChange({ target: { value } }, form) {
+  function handleAddressChange(
+    { target: { value } }: FocusEvent<HTMLInputElement>,
+    form: FormikProps<string>
+  ) {
     if (value) {
       let urlQuery = value
         .replace(/,\s(\d+)/, " $1")
@@ -55,7 +66,10 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
     }
   }
 
-  function handleSubmit(values, actions) {
+  function handleSubmit(
+    values: FormValues,
+    actions: FormikHelpers<FormValues>
+  ) {
     const {
       geolocation: { lat, lng },
     } = values;
@@ -77,7 +91,8 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
   }
 
   return (
-    <Formik
+    <Formik<FormValues>
+      // @ts-ignore
       innerRef={ref}
       initialValues={initialValues}
       enableReinitialize={true}
@@ -97,7 +112,7 @@ const ContactForm = forwardRef(function ContactForm(props, ref) {
               <Field
                 name="geolocation"
                 component={GMap}
-                onLocationUpdated={handleLocationUpdated}
+                handleLocationUpdate={handleLocationUpdated}
               />
             </div>
             <div className="mb-1">
