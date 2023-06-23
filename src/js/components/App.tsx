@@ -1,20 +1,13 @@
-import { useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 import { calculateNavLinkClass } from "../utils/cssUtils";
 import { localStorageSelectedVendor } from "../utils/localStorageUtils";
+import { useAppSelector } from "../hooks";
+import { selectedVendor } from "../reducers/selectedVendorSlice";
 
 export default function App() {
-  let selectedVendor = "McDonalds";
-  let stateVendor = useSelector((state) => state.selectedVendor);
+  let stateVendor = useAppSelector(selectedVendor);
   let localStorageVendor = JSON.parse(localStorageSelectedVendor);
-
-  if (stateVendor) {
-    selectedVendor = stateVendor;
-  }
-
-  if (localStorageVendor) {
-    selectedVendor = localStorageVendor;
-  }
+  let vendor = stateVendor || localStorageVendor || "McDonalds";
 
   return (
     <div className="App">
@@ -23,7 +16,7 @@ export default function App() {
           <ul className="nav nav-underline py-2">
             <li className="nav-item">
               <NavLink
-                to={`/category/${selectedVendor}`}
+                to={`/category/${vendor}`}
                 className={calculateNavLinkClass}
               >
                 Shop

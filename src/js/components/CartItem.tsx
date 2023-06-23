@@ -1,10 +1,13 @@
-import { useDispatch } from "react-redux";
-import {
-  REMOVE_PRODUCT_FROM_CART,
-  UPDATE_PRODUCT_IN_CART,
-  RESET_SELECTED_VENDOR,
-} from "../constants/actionTypes";
+import { ChangeEvent } from "react";
+import { useAppDispatch } from "../hooks";
+import { productRemoved, productQuantityUpdated } from "../reducers/cartSlice";
+import { vendorReset } from "../reducers/selectedVendorSlice";
+import { MenuItemProps } from "../components/MenuItem";
 import "../../css/CartItem.css";
+
+interface CartItemProps extends MenuItemProps {
+  isOneAndOnly: boolean;
+}
 
 export default function CartItem({
   productId,
@@ -13,27 +16,22 @@ export default function CartItem({
   title,
   price,
   isOneAndOnly,
-}) {
-  const dispatch = useDispatch();
+}: CartItemProps) {
+  const dispatch = useAppDispatch();
 
-  function handleAmountChange(e) {
-    dispatch({
-      type: UPDATE_PRODUCT_IN_CART,
-      productId,
-      quantity: parseInt(e.target.value || 0),
-    });
+  function handleAmountChange(e: ChangeEvent<HTMLInputElement>) {
+    dispatch(
+      productQuantityUpdated({
+        productId,
+        quantity: parseInt(e.target.value || "0"),
+      })
+    );
   }
 
   function handleRemoveItem() {
-    dispatch({
-      type: REMOVE_PRODUCT_FROM_CART,
-      productId,
-    });
+    dispatch(productRemoved(productId));
 
-    isOneAndOnly &&
-      dispatch({
-        type: RESET_SELECTED_VENDOR,
-      });
+    isOneAndOnly && dispatch(vendorReset());
   }
 
   return (

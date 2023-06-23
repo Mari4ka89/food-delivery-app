@@ -1,11 +1,13 @@
 import { useRef } from "react";
+import { FormikProps } from "formik";
+import { FormValues } from "./ContactForm";
 import ContactForm from "./ContactForm";
 import SelectedItems from "./SelectedItems";
 import SubmitOrder from "./SubmitOrder";
 import "../../css/ShoppingCart.css";
 
 export default function ShoppingCart() {
-  const formRef = useRef();
+  const formRef = useRef<FormikProps<FormValues>>(null);
 
   function handleSubmit() {
     if (formRef.current) {
@@ -26,7 +28,7 @@ export default function ShoppingCart() {
             <div className="border rounded flex-grow-1 overflow-auto p-3">
               <SelectedItems />
             </div>
-            <SubmitOrder onSubmit={handleSubmit} />
+            <SubmitOrder handleSubmit={handleSubmit} />
           </div>
         </div>
       </div>

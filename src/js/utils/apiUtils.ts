@@ -1,4 +1,4 @@
-export function checkResponseStatus(response) {
+export function checkResponseStatus(response: any) {
   if (response.status === 200) {
     return response.json();
   } else {
