@@ -1,9 +1,10 @@
 import { json } from "react-router-dom";
+import { API_URL } from "../constants/api";
 
 const menuLoader = async ({ params }) => {
   try {
     let response = await fetch(
-      `http://fake-store-api.eu-4.evennode.com/products/category/${params.vendorId}`
+      `${API_URL}products/category/${params.vendorId}`
     );
     let menuItems = await response.json();
 

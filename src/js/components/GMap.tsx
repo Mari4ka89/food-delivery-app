@@ -3,7 +3,7 @@ import { useAppSelector } from "../hooks";
 import { selectedVendor } from "../reducers/selectedVendorSlice";
 import { CENTER, VENDORS_LOCATIONS } from "../constants/mapLocations";
 import Spinner from "./Spinner";
-import { API_KEY } from "../constants/apiKey";
+import { API_KEY } from "../constants/api";
 
 export type Coordinates = {
   lat: number;

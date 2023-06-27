@@ -8,7 +8,7 @@ import GMap, { Coordinates } from "./GMap";
 import { cartDropped, cart } from "../reducers/cartSlice";
 import { vendorReset } from "../reducers/selectedVendorSlice";
 import { CENTER } from "../constants/mapLocations";
-import { API_KEY } from "../constants/apiKey";
+import { API_KEY } from "../constants/api";
 
 export type FormValues = {
   geolocation: Coordinates;

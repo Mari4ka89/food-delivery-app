@@ -1,10 +1,9 @@
 import { json } from "react-router-dom";
+import { API_URL } from "../constants/api";
 
 const vendorsLoader = async () => {
   try {
-    let response = await fetch(
-      "http://fake-store-api.eu-4.evennode.com/products/categories"
-    );
+    let response = await fetch(`${API_URL}products/categories`);
     let vendors = await response.json();
 
     return vendors.reverse();
