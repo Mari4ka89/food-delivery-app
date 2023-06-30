@@ -1,4 +1,4 @@
-# To see application running visit: http://food-delivery-app.eu-4.evennode.com/
+# To see application running visit: https://polite-sunburst-6a838e.netlify.app
 
 # Getting Started with Create React App
 
