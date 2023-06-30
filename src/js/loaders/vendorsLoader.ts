@@ -6,7 +6,7 @@ const vendorsLoader = async () => {
     let response = await fetch(`${API_URL}products/categories`);
     let vendors = await response.json();
 
-    return vendors.reverse();
+    return vendors;
   } catch (e) {
     throw json(
       { message: "Error occured while fetching vendors" },
